@@ -1,0 +1,976 @@
+[
+    {
+        "id": "2450627b6ebc1137",
+        "type": "group",
+        "z": "735b6dfbeb282159",
+        "name": "Dashboard",
+        "style": {
+            "stroke": "#777777",
+            "fill": "#ffffff",
+            "label": true,
+            "label-position": "n",
+            "color": "#000000"
+        },
+        "nodes": [
+            "0b023f4426adf69e",
+            "5e5c30c2268fee58",
+            "b5b506d151c9bf78",
+            "98e5433ffd679323",
+            "33329538e437ccaf"
+        ],
+        "x": 88,
+        "y": 33,
+        "w": 1444,
+        "h": 574
+    },
+    {
+        "id": "0b023f4426adf69e",
+        "type": "ui_worldmap",
+        "z": "735b6dfbeb282159",
+        "g": "2450627b6ebc1137",
+        "group": "8c766721b227b4d6",
+        "order": 1,
+        "width": 20,
+        "height": 9,
+        "name": "",
+        "lat": "41.007181",
+        "lon": "-8.641036",
+        "zoom": "",
+        "layer": "OSMH",
+        "cluster": "",
+        "maxage": "",
+        "usermenu": "show",
+        "layers": "show",
+        "panit": "false",
+        "panlock": "false",
+        "zoomlock": "false",
+        "hiderightclick": "false",
+        "coords": "none",
+        "showgrid": "false",
+        "showruler": "false",
+        "allowFileDrop": "false",
+        "path": "/worldmap",
+        "overlist": "CO,RA,DN,BU,RW,SN,AC,TL,HM",
+        "maplist": "OSMH,EsriS",
+        "mapname": "",
+        "mapurl": "",
+        "mapopt": "",
+        "mapwms": false,
+        "x": 1000,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "5e5c30c2268fee58",
+        "type": "link in",
+        "z": "735b6dfbeb282159",
+        "g": "2450627b6ebc1137",
+        "name": "link in 2",
+        "links": [
+            "d96814bbc763f02a",
+            "ef4ed88f717c62d3",
+            "b83f75a5cbb4f32a"
+        ],
+        "x": 905,
+        "y": 380,
+        "wires": [
+            [
+                "0b023f4426adf69e"
+            ]
+        ]
+    },
+    {
+        "id": "b5b506d151c9bf78",
+        "type": "group",
+        "z": "735b6dfbeb282159",
+        "g": "2450627b6ebc1137",
+        "name": "Trash #1 (Paper)",
+        "style": {
+            "label": true,
+            "stroke": "#777777",
+            "fill": "#3f93cf",
+            "label-position": "n",
+            "color": "#000000"
+        },
+        "nodes": [
+            "f14106e9177781b4",
+            "ef4ed88f717c62d3",
+            "6a2529dbca9eb40f",
+            "5546df51c2d885b0",
+            "2e7aeea1225f3e34",
+            "8e37ae6cacc364b9",
+            "137f823e5e94d753",
+            "d9283782c2d51eca",
+            "bbcd3d937cd985ed",
+            "a95b3f65ebb952bf"
+        ],
+        "x": 114,
+        "y": 59,
+        "w": 712,
+        "h": 242
+    },
+    {
+        "id": "f14106e9177781b4",
+        "type": "ui_gauge",
+        "z": "735b6dfbeb282159",
+        "g": "b5b506d151c9bf78",
+        "name": "",
+        "group": "8c766721b227b4d6",
+        "order": 2,
+        "width": 7,
+        "height": 6,
+        "gtype": "gage",
+        "title": "Paper / Cardboard",
+        "label": "Capacity",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "3",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 710,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "ef4ed88f717c62d3",
+        "type": "link out",
+        "z": "735b6dfbeb282159",
+        "g": "b5b506d151c9bf78",
+        "name": "link out 2",
+        "mode": "link",
+        "links": [
+            "5e5c30c2268fee58"
+        ],
+        "x": 515,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "6a2529dbca9eb40f",
+        "type": "mqtt in",
+        "z": "735b6dfbeb282159",
+        "g": "b5b506d151c9bf78",
+        "name": "",
+        "topic": "AI4F/gps",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "8ef87599d0d24407",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 200,
+        "y": 140,
+        "wires": [
+            [
+                "5546df51c2d885b0"
+            ]
+        ]
+    },
+    {
+        "id": "5546df51c2d885b0",
+        "type": "function",
+        "z": "735b6dfbeb282159",
+        "g": "b5b506d151c9bf78",
+        "name": "Paper / Cardboard",
+        "func": "\nvar array = msg.payload.split('/'),\n    a = array[0], b = array[1]\n\nvar lat = a\nvar lon = b\n\nmsg.payload = {\n    lat: lat,\n    lon: lon,\n    name: \"Paper / Cardboard\",\n    icon: \"fa-trash\",\n    iconColor: \"#0e28ab\"\n    \n    \n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 370,
+        "y": 140,
+        "wires": [
+            [
+                "ef4ed88f717c62d3",
+                "8e37ae6cacc364b9"
+            ]
+        ]
+    },
+    {
+        "id": "2e7aeea1225f3e34",
+        "type": "mqtt in",
+        "z": "735b6dfbeb282159",
+        "g": "b5b506d151c9bf78",
+        "name": "",
+        "topic": "AI4F/T1Status",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "8ef87599d0d24407",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 210,
+        "y": 220,
+        "wires": [
+            [
+                "137f823e5e94d753"
+            ]
+        ]
+    },
+    {
+        "id": "8e37ae6cacc364b9",
+        "type": "debug",
+        "z": "735b6dfbeb282159",
+        "g": "b5b506d151c9bf78",
+        "name": "debug 12",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 480,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "137f823e5e94d753",
+        "type": "switch",
+        "z": "735b6dfbeb282159",
+        "g": "b5b506d151c9bf78",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "lte",
+                "v": "15",
+                "vt": "str"
+            },
+            {
+                "t": "gt",
+                "v": "15",
+                "vt": "str"
+            },
+            {
+                "t": "gte",
+                "v": "30",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 3,
+        "x": 350,
+        "y": 220,
+        "wires": [
+            [
+                "d9283782c2d51eca"
+            ],
+            [
+                "bbcd3d937cd985ed"
+            ],
+            [
+                "a95b3f65ebb952bf"
+            ]
+        ]
+    },
+    {
+        "id": "d9283782c2d51eca",
+        "type": "change",
+        "z": "735b6dfbeb282159",
+        "g": "b5b506d151c9bf78",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "3",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 500,
+        "y": 180,
+        "wires": [
+            [
+                "f14106e9177781b4"
+            ]
+        ]
+    },
+    {
+        "id": "bbcd3d937cd985ed",
+        "type": "change",
+        "z": "735b6dfbeb282159",
+        "g": "b5b506d151c9bf78",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "2",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 500,
+        "y": 220,
+        "wires": [
+            [
+                "f14106e9177781b4"
+            ]
+        ]
+    },
+    {
+        "id": "a95b3f65ebb952bf",
+        "type": "change",
+        "z": "735b6dfbeb282159",
+        "g": "b5b506d151c9bf78",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "1",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 500,
+        "y": 260,
+        "wires": [
+            [
+                "f14106e9177781b4"
+            ]
+        ]
+    },
+    {
+        "id": "8ef87599d0d24407",
+        "type": "mqtt-broker",
+        "name": "Slave",
+        "broker": "Broker.hivemq.com",
+        "port": "1883",
+        "tls": "",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "5",
+        "cleansession": true,
+        "birthTopic": "NodeRedDashboard/StatusCheck",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "online",
+        "birthMsg": {},
+        "closeTopic": "NodeRedDashboard/StatusCheck",
+        "closeQos": "0",
+        "closeRetain": "true",
+        "closePayload": "offline",
+        "closeMsg": {},
+        "willTopic": "NodeRedDashboard/StatusCheck",
+        "willQos": "0",
+        "willRetain": "true",
+        "willPayload": "failed",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "98e5433ffd679323",
+        "type": "group",
+        "z": "735b6dfbeb282159",
+        "g": "2450627b6ebc1137",
+        "name": "Trash #2 (Glass)",
+        "style": {
+            "label": true,
+            "stroke": "#777777",
+            "fill": "#92d04f",
+            "label-position": "n",
+            "color": "#000000"
+        },
+        "nodes": [
+            "fb3cd3dad46d245f",
+            "d96814bbc763f02a",
+            "ef89ebe6121cb7c2",
+            "c77d87ce4185f713",
+            "3bd258f04f57d334",
+            "4a4cf13af2ab3a3e",
+            "2906085e6c35712c",
+            "9566a9de7250fac6",
+            "6c4a5d59c8fccf21",
+            "ef0627bab0e7e2b3"
+        ],
+        "x": 854,
+        "y": 59,
+        "w": 652,
+        "h": 242
+    },
+    {
+        "id": "fb3cd3dad46d245f",
+        "type": "ui_gauge",
+        "z": "735b6dfbeb282159",
+        "g": "98e5433ffd679323",
+        "name": "",
+        "group": "8c766721b227b4d6",
+        "order": 3,
+        "width": 6,
+        "height": 6,
+        "gtype": "gage",
+        "title": "Glass",
+        "label": "Capacity",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "3",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 1430,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "d96814bbc763f02a",
+        "type": "link out",
+        "z": "735b6dfbeb282159",
+        "g": "98e5433ffd679323",
+        "name": "link out 4",
+        "mode": "link",
+        "links": [
+            "5e5c30c2268fee58"
+        ],
+        "x": 1215,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "ef89ebe6121cb7c2",
+        "type": "function",
+        "z": "735b6dfbeb282159",
+        "g": "98e5433ffd679323",
+        "name": "Glass",
+        "func": "\nvar array = msg.payload.split('/'),\n    a = array[0], b = array[1]\n\nvar lat = a\nvar lon = b\n\nmsg.payload = {\n    lat: lat,\n    lon: lon,\n    name: \"Glass\",\n    icon: \"fa-trash\",\n    iconColor: \"#43bd06\"\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1070,
+        "y": 140,
+        "wires": [
+            [
+                "d96814bbc763f02a",
+                "4a4cf13af2ab3a3e"
+            ]
+        ]
+    },
+    {
+        "id": "c77d87ce4185f713",
+        "type": "mqtt in",
+        "z": "735b6dfbeb282159",
+        "g": "98e5433ffd679323",
+        "name": "",
+        "topic": "AI4F/gps",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "8ef87599d0d24407",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 940,
+        "y": 140,
+        "wires": [
+            [
+                "ef89ebe6121cb7c2"
+            ]
+        ]
+    },
+    {
+        "id": "3bd258f04f57d334",
+        "type": "mqtt in",
+        "z": "735b6dfbeb282159",
+        "g": "98e5433ffd679323",
+        "name": "",
+        "topic": "AI4F/T2Status",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "8ef87599d0d24407",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 950,
+        "y": 220,
+        "wires": [
+            [
+                "2906085e6c35712c"
+            ]
+        ]
+    },
+    {
+        "id": "4a4cf13af2ab3a3e",
+        "type": "debug",
+        "z": "735b6dfbeb282159",
+        "g": "98e5433ffd679323",
+        "name": "debug 11",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1160,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "2906085e6c35712c",
+        "type": "switch",
+        "z": "735b6dfbeb282159",
+        "g": "98e5433ffd679323",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "lte",
+                "v": "15",
+                "vt": "str"
+            },
+            {
+                "t": "gt",
+                "v": "15",
+                "vt": "str"
+            },
+            {
+                "t": "gte",
+                "v": "30",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 3,
+        "x": 1090,
+        "y": 220,
+        "wires": [
+            [
+                "ef0627bab0e7e2b3"
+            ],
+            [
+                "6c4a5d59c8fccf21"
+            ],
+            [
+                "9566a9de7250fac6"
+            ]
+        ]
+    },
+    {
+        "id": "9566a9de7250fac6",
+        "type": "change",
+        "z": "735b6dfbeb282159",
+        "g": "98e5433ffd679323",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "1",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1260,
+        "y": 260,
+        "wires": [
+            [
+                "fb3cd3dad46d245f"
+            ]
+        ]
+    },
+    {
+        "id": "6c4a5d59c8fccf21",
+        "type": "change",
+        "z": "735b6dfbeb282159",
+        "g": "98e5433ffd679323",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "2",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1260,
+        "y": 220,
+        "wires": [
+            [
+                "fb3cd3dad46d245f"
+            ]
+        ]
+    },
+    {
+        "id": "ef0627bab0e7e2b3",
+        "type": "change",
+        "z": "735b6dfbeb282159",
+        "g": "98e5433ffd679323",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "3",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1260,
+        "y": 180,
+        "wires": [
+            [
+                "fb3cd3dad46d245f"
+            ]
+        ]
+    },
+    {
+        "id": "33329538e437ccaf",
+        "type": "group",
+        "z": "735b6dfbeb282159",
+        "g": "2450627b6ebc1137",
+        "name": "Trash #3 (Plastic)",
+        "style": {
+            "label": true,
+            "stroke": "#777777",
+            "fill": "#ffff00",
+            "label-position": "n",
+            "color": "#000000"
+        },
+        "nodes": [
+            "b83f75a5cbb4f32a",
+            "a8b2b9d7b2740e83",
+            "180b7b8910c49262",
+            "6d6a3c8770c8231d",
+            "9b2fd3ba498882a8",
+            "937e6c758c45561d",
+            "be89eb5c365af7c3",
+            "53412241ee71e696",
+            "32875fe7c4172326",
+            "c366e7c362800b31"
+        ],
+        "x": 114,
+        "y": 319,
+        "w": 712,
+        "h": 262
+    },
+    {
+        "id": "b83f75a5cbb4f32a",
+        "type": "link out",
+        "z": "735b6dfbeb282159",
+        "g": "33329538e437ccaf",
+        "name": "link out 3",
+        "mode": "link",
+        "links": [
+            "5e5c30c2268fee58"
+        ],
+        "x": 525,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "a8b2b9d7b2740e83",
+        "type": "ui_gauge",
+        "z": "735b6dfbeb282159",
+        "g": "33329538e437ccaf",
+        "name": "",
+        "group": "8c766721b227b4d6",
+        "order": 4,
+        "width": 7,
+        "height": 6,
+        "gtype": "gage",
+        "title": "Metal / Plastic",
+        "label": "Capacity",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "3",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 720,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "180b7b8910c49262",
+        "type": "function",
+        "z": "735b6dfbeb282159",
+        "g": "33329538e437ccaf",
+        "name": "Plastic / Metal",
+        "func": "\nvar array = msg.payload.split('/'),\n    a = array[0], b = array[1]\n\nvar lat = a\nvar lon = b \n\nmsg.payload = {\n    lat: lat,\n    lon: lon,\n    name: \"Plastic / Metal\",\n    icon: \"fa-trash\",\n    iconColor: \"#e9f50f\"\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 390,
+        "y": 400,
+        "wires": [
+            [
+                "b83f75a5cbb4f32a",
+                "937e6c758c45561d"
+            ]
+        ]
+    },
+    {
+        "id": "6d6a3c8770c8231d",
+        "type": "mqtt in",
+        "z": "735b6dfbeb282159",
+        "g": "33329538e437ccaf",
+        "name": "",
+        "topic": "AI4F/gps",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "8ef87599d0d24407",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 210,
+        "y": 400,
+        "wires": [
+            [
+                "180b7b8910c49262"
+            ]
+        ]
+    },
+    {
+        "id": "9b2fd3ba498882a8",
+        "type": "mqtt in",
+        "z": "735b6dfbeb282159",
+        "g": "33329538e437ccaf",
+        "name": "",
+        "topic": "AI4F/T3Status",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "8ef87599d0d24407",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 210,
+        "y": 500,
+        "wires": [
+            [
+                "be89eb5c365af7c3"
+            ]
+        ]
+    },
+    {
+        "id": "937e6c758c45561d",
+        "type": "debug",
+        "z": "735b6dfbeb282159",
+        "g": "33329538e437ccaf",
+        "name": "debug 13",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 490,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "be89eb5c365af7c3",
+        "type": "switch",
+        "z": "735b6dfbeb282159",
+        "g": "33329538e437ccaf",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "lte",
+                "v": "15",
+                "vt": "str"
+            },
+            {
+                "t": "gt",
+                "v": "15",
+                "vt": "str"
+            },
+            {
+                "t": "gte",
+                "v": "30",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 3,
+        "x": 350,
+        "y": 500,
+        "wires": [
+            [
+                "53412241ee71e696"
+            ],
+            [
+                "32875fe7c4172326"
+            ],
+            [
+                "c366e7c362800b31"
+            ]
+        ]
+    },
+    {
+        "id": "53412241ee71e696",
+        "type": "change",
+        "z": "735b6dfbeb282159",
+        "g": "33329538e437ccaf",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "3",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 520,
+        "y": 460,
+        "wires": [
+            [
+                "a8b2b9d7b2740e83"
+            ]
+        ]
+    },
+    {
+        "id": "32875fe7c4172326",
+        "type": "change",
+        "z": "735b6dfbeb282159",
+        "g": "33329538e437ccaf",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "2",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 520,
+        "y": 500,
+        "wires": [
+            [
+                "a8b2b9d7b2740e83"
+            ]
+        ]
+    },
+    {
+        "id": "c366e7c362800b31",
+        "type": "change",
+        "z": "735b6dfbeb282159",
+        "g": "33329538e437ccaf",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "1",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 520,
+        "y": 540,
+        "wires": [
+            [
+                "a8b2b9d7b2740e83"
+            ]
+        ]
+    },
+    {
+        "id": "8c766721b227b4d6",
+        "type": "ui_group",
+        "name": "Dashboard",
+        "tab": "d53e7b4cf2de2753",
+        "order": 1,
+        "disp": true,
+        "width": "20",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "d53e7b4cf2de2753",
+        "type": "ui_tab",
+        "name": "EcoPonto",
+        "icon": "pin_drop",
+        "order": 2,
+        "disabled": false,
+        "hidden": false
+    }
+]
