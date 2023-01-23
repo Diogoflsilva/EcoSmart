@@ -1,0 +1,1086 @@
+[
+    {
+        "id": "2450627b6ebc1137",
+        "type": "group",
+        "z": "735b6dfbeb282159",
+        "name": "Dashboard",
+        "style": {
+            "stroke": "#777777",
+            "fill": "#ffffff",
+            "label": true,
+            "label-position": "n",
+            "color": "#000000"
+        },
+        "nodes": [
+            "dc6e8b9c006b6796",
+            "b5b506d151c9bf78",
+            "33329538e437ccaf",
+            "796c6b6d4b043cf6"
+        ],
+        "x": 28,
+        "y": 133,
+        "w": 1704,
+        "h": 574
+    },
+    {
+        "id": "dc6e8b9c006b6796",
+        "type": "group",
+        "z": "735b6dfbeb282159",
+        "g": "2450627b6ebc1137",
+        "name": "Settings",
+        "style": {
+            "stroke": "#777777",
+            "fill": "#ffcf3f",
+            "label": true,
+            "label-position": "n",
+            "color": "#000000"
+        },
+        "nodes": [
+            "bdea2fea034e77c0",
+            "4fe30fa617cd7224",
+            "01733c34cd8b85be",
+            "3b563bccb74165df",
+            "11f6484e22a89e05",
+            "5f903a050fdb2074",
+            "70938894e7f8b4c3",
+            "da44d81e049d8f79",
+            "2d10a832bbea0c5a",
+            "7c883e50e3910233",
+            "3ddb36de012a7ee6",
+            "5e07135e0be744b8",
+            "14e59b689ff7a8d6",
+            "bc769f68309a9eb7"
+        ],
+        "x": 814,
+        "y": 159,
+        "w": 892,
+        "h": 282
+    },
+    {
+        "id": "bdea2fea034e77c0",
+        "type": "mqtt in",
+        "z": "735b6dfbeb282159",
+        "g": "dc6e8b9c006b6796",
+        "name": "",
+        "topic": "AI4F/gps",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "8ef87599d0d24407",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 900,
+        "y": 360,
+        "wires": [
+            [
+                "4fe30fa617cd7224"
+            ]
+        ]
+    },
+    {
+        "id": "4fe30fa617cd7224",
+        "type": "function",
+        "z": "735b6dfbeb282159",
+        "g": "dc6e8b9c006b6796",
+        "name": "Var splitter",
+        "func": "\n    msg1 = {};\n    msg2 = {};\n\nvar array = msg.payload.split('/'),\n    a = array[0], b = array[1]\n      \n    msg1.payload = a;\n    msg2.payload = b;\n\n    return [msg1,msg2];\n",
+        "outputs": 2,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1050,
+        "y": 360,
+        "wires": [
+            [
+                "3b563bccb74165df"
+            ],
+            [
+                "01733c34cd8b85be"
+            ]
+        ]
+    },
+    {
+        "id": "01733c34cd8b85be",
+        "type": "change",
+        "z": "735b6dfbeb282159",
+        "g": "dc6e8b9c006b6796",
+        "name": "",
+        "rules": [
+            {
+                "t": "move",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.Logitude",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1150,
+        "y": 400,
+        "wires": [
+            [
+                "11f6484e22a89e05"
+            ]
+        ]
+    },
+    {
+        "id": "3b563bccb74165df",
+        "type": "change",
+        "z": "735b6dfbeb282159",
+        "g": "dc6e8b9c006b6796",
+        "name": "",
+        "rules": [
+            {
+                "t": "move",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.Latitude",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1150,
+        "y": 320,
+        "wires": [
+            [
+                "11f6484e22a89e05"
+            ]
+        ]
+    },
+    {
+        "id": "11f6484e22a89e05",
+        "type": "ui_form",
+        "z": "735b6dfbeb282159",
+        "g": "dc6e8b9c006b6796",
+        "name": "",
+        "label": "EcoSmart Location",
+        "group": "ba2bedad13ea9b91",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "options": [
+            {
+                "label": "Latitude",
+                "value": "Latitude",
+                "type": "text",
+                "required": true,
+                "rows": null
+            },
+            {
+                "label": "Logitude",
+                "value": "Logitude",
+                "type": "text",
+                "required": true,
+                "rows": null
+            }
+        ],
+        "formValue": {
+            "Latitude": "",
+            "Logitude": ""
+        },
+        "payload": "",
+        "submit": "Set",
+        "cancel": "",
+        "topic": "topic",
+        "topicType": "msg",
+        "splitLayout": false,
+        "className": "",
+        "x": 1270,
+        "y": 360,
+        "wires": [
+            [
+                "5f903a050fdb2074",
+                "70938894e7f8b4c3"
+            ]
+        ]
+    },
+    {
+        "id": "5f903a050fdb2074",
+        "type": "change",
+        "z": "735b6dfbeb282159",
+        "g": "dc6e8b9c006b6796",
+        "name": "",
+        "rules": [
+            {
+                "t": "move",
+                "p": "payload.Latitude",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1420,
+        "y": 320,
+        "wires": [
+            [
+                "da44d81e049d8f79"
+            ]
+        ]
+    },
+    {
+        "id": "70938894e7f8b4c3",
+        "type": "change",
+        "z": "735b6dfbeb282159",
+        "g": "dc6e8b9c006b6796",
+        "name": "",
+        "rules": [
+            {
+                "t": "move",
+                "p": "payload.Logitude",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1420,
+        "y": 400,
+        "wires": [
+            [
+                "da44d81e049d8f79"
+            ]
+        ]
+    },
+    {
+        "id": "da44d81e049d8f79",
+        "type": "join",
+        "z": "735b6dfbeb282159",
+        "g": "dc6e8b9c006b6796",
+        "name": "",
+        "mode": "custom",
+        "build": "string",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "/",
+        "joinerType": "str",
+        "accumulate": false,
+        "timeout": "1",
+        "count": "2",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "reduceFixup": "",
+        "x": 1470,
+        "y": 360,
+        "wires": [
+            [
+                "2d10a832bbea0c5a"
+            ]
+        ]
+    },
+    {
+        "id": "2d10a832bbea0c5a",
+        "type": "mqtt out",
+        "z": "735b6dfbeb282159",
+        "g": "dc6e8b9c006b6796",
+        "name": "",
+        "topic": "AI4F/gps",
+        "qos": "0",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "242b118233d69287",
+        "x": 1620,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "7c883e50e3910233",
+        "type": "ui_button",
+        "z": "735b6dfbeb282159",
+        "g": "dc6e8b9c006b6796",
+        "name": "",
+        "group": "ba2bedad13ea9b91",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Return to Dashboard",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 940,
+        "y": 200,
+        "wires": [
+            [
+                "5e07135e0be744b8"
+            ]
+        ]
+    },
+    {
+        "id": "3ddb36de012a7ee6",
+        "type": "ui_button",
+        "z": "735b6dfbeb282159",
+        "g": "dc6e8b9c006b6796",
+        "name": "",
+        "group": "8c766721b227b4d6",
+        "order": 6,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Settings",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 900,
+        "y": 240,
+        "wires": [
+            [
+                "14e59b689ff7a8d6"
+            ]
+        ]
+    },
+    {
+        "id": "5e07135e0be744b8",
+        "type": "change",
+        "z": "735b6dfbeb282159",
+        "g": "dc6e8b9c006b6796",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"group\":{\"hide\":[\"EcoPonto_Settings\"],\"show\":[\"EcoPonto_Dashboard\"]}}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1160,
+        "y": 200,
+        "wires": [
+            [
+                "bc769f68309a9eb7"
+            ]
+        ]
+    },
+    {
+        "id": "14e59b689ff7a8d6",
+        "type": "change",
+        "z": "735b6dfbeb282159",
+        "g": "dc6e8b9c006b6796",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"group\":{\"hide\":[\"EcoPonto_Dashboard\"],\"show\":[\"EcoPonto_Settings\"]}}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1160,
+        "y": 240,
+        "wires": [
+            [
+                "bc769f68309a9eb7"
+            ]
+        ]
+    },
+    {
+        "id": "bc769f68309a9eb7",
+        "type": "ui_ui_control",
+        "z": "735b6dfbeb282159",
+        "g": "dc6e8b9c006b6796",
+        "name": "",
+        "events": "all",
+        "x": 1340,
+        "y": 220,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8ef87599d0d24407",
+        "type": "mqtt-broker",
+        "name": "Slave",
+        "broker": "Broker.hivemq.com",
+        "port": "1883",
+        "tls": "",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "5",
+        "cleansession": true,
+        "birthTopic": "NodeRedDashboard/StatusCheck",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "online",
+        "birthMsg": {},
+        "closeTopic": "NodeRedDashboard/StatusCheck",
+        "closeQos": "0",
+        "closeRetain": "true",
+        "closePayload": "offline",
+        "closeMsg": {},
+        "willTopic": "NodeRedDashboard/StatusCheck",
+        "willQos": "0",
+        "willRetain": "true",
+        "willPayload": "failed",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "ba2bedad13ea9b91",
+        "type": "ui_group",
+        "name": "Settings",
+        "tab": "d53e7b4cf2de2753",
+        "order": 2,
+        "disp": false,
+        "width": "20",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "242b118233d69287",
+        "type": "mqtt-broker",
+        "name": "hivemq",
+        "broker": "broker.hivemq.com",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "8c766721b227b4d6",
+        "type": "ui_group",
+        "name": "Dashboard",
+        "tab": "d53e7b4cf2de2753",
+        "order": 1,
+        "disp": true,
+        "width": "20",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "d53e7b4cf2de2753",
+        "type": "ui_tab",
+        "name": "EcoPonto",
+        "icon": "pin_drop",
+        "order": 2,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "b5b506d151c9bf78",
+        "type": "group",
+        "z": "735b6dfbeb282159",
+        "g": "2450627b6ebc1137",
+        "name": "Trash #1 (Paper)",
+        "style": {
+            "label": true,
+            "stroke": "#777777",
+            "fill": "#3f93cf",
+            "label-position": "n",
+            "color": "#000000"
+        },
+        "nodes": [
+            "f14106e9177781b4",
+            "2e7aeea1225f3e34",
+            "137f823e5e94d753",
+            "d9283782c2d51eca",
+            "bbcd3d937cd985ed",
+            "a95b3f65ebb952bf"
+        ],
+        "x": 54,
+        "y": 159,
+        "w": 732,
+        "h": 162
+    },
+    {
+        "id": "f14106e9177781b4",
+        "type": "ui_gauge",
+        "z": "735b6dfbeb282159",
+        "g": "b5b506d151c9bf78",
+        "name": "",
+        "group": "8c766721b227b4d6",
+        "order": 3,
+        "width": 7,
+        "height": 6,
+        "gtype": "gage",
+        "title": "Paper / Cardboard",
+        "label": "Capacity",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "3",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 670,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "2e7aeea1225f3e34",
+        "type": "mqtt in",
+        "z": "735b6dfbeb282159",
+        "g": "b5b506d151c9bf78",
+        "name": "",
+        "topic": "AI4F/T1Status",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "8ef87599d0d24407",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 150,
+        "y": 240,
+        "wires": [
+            [
+                "137f823e5e94d753"
+            ]
+        ]
+    },
+    {
+        "id": "137f823e5e94d753",
+        "type": "switch",
+        "z": "735b6dfbeb282159",
+        "g": "b5b506d151c9bf78",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "lte",
+                "v": "15",
+                "vt": "str"
+            },
+            {
+                "t": "gt",
+                "v": "15",
+                "vt": "str"
+            },
+            {
+                "t": "gte",
+                "v": "30",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 3,
+        "x": 310,
+        "y": 240,
+        "wires": [
+            [
+                "d9283782c2d51eca"
+            ],
+            [
+                "bbcd3d937cd985ed"
+            ],
+            [
+                "a95b3f65ebb952bf"
+            ]
+        ]
+    },
+    {
+        "id": "d9283782c2d51eca",
+        "type": "change",
+        "z": "735b6dfbeb282159",
+        "g": "b5b506d151c9bf78",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "3",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 460,
+        "y": 200,
+        "wires": [
+            [
+                "f14106e9177781b4"
+            ]
+        ]
+    },
+    {
+        "id": "bbcd3d937cd985ed",
+        "type": "change",
+        "z": "735b6dfbeb282159",
+        "g": "b5b506d151c9bf78",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "2",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 460,
+        "y": 240,
+        "wires": [
+            [
+                "f14106e9177781b4"
+            ]
+        ]
+    },
+    {
+        "id": "a95b3f65ebb952bf",
+        "type": "change",
+        "z": "735b6dfbeb282159",
+        "g": "b5b506d151c9bf78",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "1",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 460,
+        "y": 280,
+        "wires": [
+            [
+                "f14106e9177781b4"
+            ]
+        ]
+    },
+    {
+        "id": "33329538e437ccaf",
+        "type": "group",
+        "z": "735b6dfbeb282159",
+        "g": "2450627b6ebc1137",
+        "name": "Trash #3 (Plastic)",
+        "style": {
+            "label": true,
+            "stroke": "#777777",
+            "fill": "#ffff00",
+            "label-position": "n",
+            "color": "#000000"
+        },
+        "nodes": [
+            "a8b2b9d7b2740e83",
+            "9b2fd3ba498882a8",
+            "be89eb5c365af7c3",
+            "53412241ee71e696",
+            "32875fe7c4172326",
+            "c366e7c362800b31"
+        ],
+        "x": 54,
+        "y": 519,
+        "w": 732,
+        "h": 162
+    },
+    {
+        "id": "a8b2b9d7b2740e83",
+        "type": "ui_gauge",
+        "z": "735b6dfbeb282159",
+        "g": "33329538e437ccaf",
+        "name": "",
+        "group": "8c766721b227b4d6",
+        "order": 5,
+        "width": 7,
+        "height": 6,
+        "gtype": "gage",
+        "title": "Metal / Plastic",
+        "label": "Capacity",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "3",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 680,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "9b2fd3ba498882a8",
+        "type": "mqtt in",
+        "z": "735b6dfbeb282159",
+        "g": "33329538e437ccaf",
+        "name": "",
+        "topic": "AI4F/T3Status",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "8ef87599d0d24407",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 150,
+        "y": 600,
+        "wires": [
+            [
+                "be89eb5c365af7c3"
+            ]
+        ]
+    },
+    {
+        "id": "be89eb5c365af7c3",
+        "type": "switch",
+        "z": "735b6dfbeb282159",
+        "g": "33329538e437ccaf",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "lte",
+                "v": "15",
+                "vt": "str"
+            },
+            {
+                "t": "gt",
+                "v": "15",
+                "vt": "str"
+            },
+            {
+                "t": "gte",
+                "v": "30",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 3,
+        "x": 310,
+        "y": 600,
+        "wires": [
+            [
+                "53412241ee71e696"
+            ],
+            [
+                "32875fe7c4172326"
+            ],
+            [
+                "c366e7c362800b31"
+            ]
+        ]
+    },
+    {
+        "id": "53412241ee71e696",
+        "type": "change",
+        "z": "735b6dfbeb282159",
+        "g": "33329538e437ccaf",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "3",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 470,
+        "y": 560,
+        "wires": [
+            [
+                "a8b2b9d7b2740e83"
+            ]
+        ]
+    },
+    {
+        "id": "32875fe7c4172326",
+        "type": "change",
+        "z": "735b6dfbeb282159",
+        "g": "33329538e437ccaf",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "2",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 470,
+        "y": 600,
+        "wires": [
+            [
+                "a8b2b9d7b2740e83"
+            ]
+        ]
+    },
+    {
+        "id": "c366e7c362800b31",
+        "type": "change",
+        "z": "735b6dfbeb282159",
+        "g": "33329538e437ccaf",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "1",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 470,
+        "y": 640,
+        "wires": [
+            [
+                "a8b2b9d7b2740e83"
+            ]
+        ]
+    },
+    {
+        "id": "796c6b6d4b043cf6",
+        "type": "group",
+        "z": "735b6dfbeb282159",
+        "g": "2450627b6ebc1137",
+        "name": "GPS",
+        "style": {
+            "stroke": "#777777",
+            "fill": "#ffcf3f",
+            "label": true,
+            "label-position": "n",
+            "color": "#000000"
+        },
+        "nodes": [
+            "c77d87ce4185f713",
+            "ef89ebe6121cb7c2",
+            "0b023f4426adf69e",
+            "d6ab20cee40b383c",
+            "d84d347ef5d3f8fb"
+        ],
+        "x": 814,
+        "y": 459,
+        "w": 472,
+        "h": 142
+    },
+    {
+        "id": "c77d87ce4185f713",
+        "type": "mqtt in",
+        "z": "735b6dfbeb282159",
+        "g": "796c6b6d4b043cf6",
+        "name": "",
+        "topic": "AI4F/gps",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "8ef87599d0d24407",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 900,
+        "y": 560,
+        "wires": [
+            [
+                "ef89ebe6121cb7c2"
+            ]
+        ]
+    },
+    {
+        "id": "ef89ebe6121cb7c2",
+        "type": "function",
+        "z": "735b6dfbeb282159",
+        "g": "796c6b6d4b043cf6",
+        "name": "EcoSmart",
+        "func": "\nvar array = msg.payload.split('/'),\n    a = array[0], b = array[1]\n\nvar lat = a\nvar lon = b\n\nmsg.payload = {\n    lat: lat,\n    lon: lon,\n    name: \"EcoSmart\",\n    icon: \"fa-trash\"\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1060,
+        "y": 560,
+        "wires": [
+            [
+                "0b023f4426adf69e"
+            ]
+        ]
+    },
+    {
+        "id": "0b023f4426adf69e",
+        "type": "ui_worldmap",
+        "z": "735b6dfbeb282159",
+        "g": "796c6b6d4b043cf6",
+        "group": "8c766721b227b4d6",
+        "order": 2,
+        "width": 20,
+        "height": 9,
+        "name": "",
+        "lat": "41.007181",
+        "lon": "-8.641036",
+        "zoom": "",
+        "layer": "OSMH",
+        "cluster": "",
+        "maxage": "",
+        "usermenu": "show",
+        "layers": "show",
+        "panit": "false",
+        "panlock": "false",
+        "zoomlock": "false",
+        "hiderightclick": "false",
+        "coords": "none",
+        "showgrid": "false",
+        "showruler": "false",
+        "allowFileDrop": "false",
+        "path": "/worldmap",
+        "overlist": "CO,RA,DN,BU,RW,SN,AC,TL,HM",
+        "maplist": "OSMH,EsriS",
+        "mapname": "",
+        "mapurl": "",
+        "mapopt": "",
+        "mapwms": false,
+        "x": 1200,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "d6ab20cee40b383c",
+        "type": "mqtt out",
+        "z": "735b6dfbeb282159",
+        "g": "796c6b6d4b043cf6",
+        "name": "",
+        "topic": "AI4F/gps",
+        "qos": "0",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "242b118233d69287",
+        "x": 1120,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "d84d347ef5d3f8fb",
+        "type": "inject",
+        "z": "735b6dfbeb282159",
+        "g": "796c6b6d4b043cf6",
+        "name": "Espinho Location",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "41.006041/-8.635897",
+        "payloadType": "str",
+        "x": 940,
+        "y": 500,
+        "wires": [
+            [
+                "d6ab20cee40b383c"
+            ]
+        ]
+    }
+]
