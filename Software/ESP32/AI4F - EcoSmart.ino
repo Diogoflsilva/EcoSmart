@@ -2,16 +2,10 @@
 #include <FS.h>
 #include <WiFi.h>
 #include <PubSubClient.h>
-#include <TinyGPS++.h>
-#include <SoftwareSerial.h>
 #include <DNSServer.h>
 #include <WebServer.h>
 #include <WiFiManager.h>
 
-// Auxiliary Variables
-int RXPin = 16;
-int TXPin = 17;
-int GPSBaud = 9600;
 
 //-------- Sensor 1 --------
 const int T1echoPin = 26;
@@ -30,16 +24,12 @@ int T2distance = 0;
 //--------------------------
 
 //-------- Sensor 3 --------
-const int T3echoPin = 35;
-const int T3trigPin = 34;
+const int T3echoPin = 19;
+const int T3trigPin = 21;
 
 int T3duration = 0;
 int T3distance = 0;
 //--------------------------
-
-
-
-
 
 // MQTT Broker
 const char *mqtt_broker = "broker.hivemq.com";
@@ -52,15 +42,8 @@ const int mqtt_port = 1883;
 char receivedChar;
 
 
-// Creating an object to communicate with the librarie
-TinyGPSPlus gps;
-
-// Creating an Serial to communicate with the GPS Module
-SoftwareSerial gpsSerial(RXPin, TXPin);
-
 WiFiClient espClient;
 PubSubClient client(espClient);
-
 
 void setup() {
 
@@ -76,7 +59,6 @@ void setup() {
 
   // Initializing the Serials
   Serial.begin(115200);
-  gpsSerial.begin(GPSBaud);
 
   //WiFiManager
   //Local intialization. Once its business is done, there is no need to keep it around
@@ -87,7 +69,6 @@ void setup() {
 
   //reset settings - for testing
   //wifiManager.resetSettings();
-
 
   //tries to connect to last known settings
   //if it does not connect it starts an access point with the specified name
@@ -129,21 +110,6 @@ void callback(char *topic, byte *payload, unsigned int length) {
 }
 
 void loop() {
-  while (gpsSerial.available())
-    if (gps.encode(gpsSerial.read()))
-      SensorsInfo();
-
-
-  if (millis() > 5000 && gps.charsProcessed() < 10) {
-    Serial.println("GPS Signal not detected");
-    while (true)
-      ;
-  }
-}
-
-
-void SensorsInfo()  // Function that Reads the sensor
-{
   //---------- Sensor 1 -----------
   digitalWrite(T1trigPin, LOW);
   delayMicroseconds(2);
@@ -200,68 +166,8 @@ void SensorsInfo()  // Function that Reads the sensor
   client.publish(T3topic, (char*) t3d.c_str());
   client.subscribe(T3topic);
 
-
   //-------------------------------
 
-
-
-
-  if (gps.location.isValid()) {
-
-    float a = gps.location.lat();
-    float b = gps.location.lng();
-
-    char lat[10];
-    char lon[10];
-
-    dtostrf(a, 5, 6, lat);
-    dtostrf(b, 5, 6, lon);
-
-    char buffer[16];
-    sprintf(buffer, "%s/%s", lat, lon);
-    Serial.println(buffer);
-
-    Serial.print("Latitude: ");
-    Serial.println(lat);  //Write the latitude of the GPS Module to the Serial
-
-    Serial.print("Longitude: ");
-    Serial.println(lon);  //Write the latitude of the GPS Module to the Serial
-
-    client.publish("AI4F/gps", buffer);
-
-  } else {
-    Serial.println("Location not detected");  //If it doesn't recieved any readings it display this error
-  }
-
-  Serial.print("Date: ");
-  if (gps.date.isValid()) {
-    Serial.print(gps.date.day());  //Day
-    Serial.print("/");
-    Serial.print(gps.date.month());  //Month
-    Serial.print("/");
-    Serial.println(gps.date.year());  //year
-  } else {
-    Serial.println("Date not found");  //If it doesn't recieved any readings it display this error
-  }
-
-  Serial.print("Time: ");
-  if (gps.time.isValid()) {
-    if (gps.time.hour() < 10) Serial.print(F("0"));
-    Serial.print(gps.time.hour() + 1);  //Ajust the "+ 1" depending your timezone (UTC +1)
-    Serial.print(":");
-    if (gps.time.minute() < 10) Serial.print(F("0"));
-    Serial.print(gps.time.minute());  //Minutes
-    Serial.print(":");
-    if (gps.time.second() < 10) Serial.print(F("0"));
-    Serial.print(gps.time.second());  //Seconds
-
-
-  } else {
-    Serial.println("Time not found");  //If it doesn't recieved any readings it display this error
-  }
-  delay(3000);
-  Serial.println();
-  Serial.println();
-
+  delay(1000);
   client.loop();
 }
